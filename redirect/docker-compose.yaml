@@ -1,0 +1,18 @@
+version: '3'
+services:
+  web:
+    build: ./web
+    ports:
+      - "8080:80"
+  api:
+    build: ./api
+    ports:
+      - "8081:80"
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8088:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+
+
