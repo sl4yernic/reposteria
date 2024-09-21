@@ -10,8 +10,6 @@ INSTALLATION
 3) run the dockercompose file using: docker compose up --build -d 
 4) Use either the browser or the cli to access both apps:
 
-curl -E http://localhost:8080/
-curl -E http://localhost:8080/api
 
 Example output:
 ```
