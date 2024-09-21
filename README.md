@@ -14,7 +14,7 @@ curl -E http://localhost:8080/
 curl -E http://localhost:8080/api
 
 Example output:
-
+```
 [root@linux reposteria]# curl -L  http://localhost:8080/api/
 <!DOCTYPE html>
 <html>
@@ -22,4 +22,4 @@ Example output:
 <h1>Welcome to the API. This is Javier demonstrating I’m awesome at containers</h1>
 </body>
 </html>
-
+```
