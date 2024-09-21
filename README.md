@@ -1,13 +1,25 @@
-This is a multi container app.
+README
 
-This app uses 3 different docker containers all running nginx: the web, api and an reverse proxy container.
+This is a simple multi container app using 3 nginx docker containers
 
-To run the app download the repo, cd to the redirect directory and run `docker compose up -d` since we are using docker-compose.yaml you do not need to manually build each app.
+INSTALLATION
 
-This app uses port 8080 for the web app, change the port in case other apps in your environment are using it.
+1) Clone the repo in your local machine
+2) Install Docker
+3) cd into the root directory named 'reposteria'
+3) run the dockercompose file using: docker compose up --build -d 
+4) Use either the browser or the cli to access both apps:
 
-Access the root app by opening your browser and typing `localhost:8088/`
+curl -E http://localhost:8080/
+curl -E http://localhost:8080/api
 
-Access the API by typing `localhost:8088/api`
+Example output:
 
-The nginx app is in charge of redirecting traffic by using a reverse proxy, defined in the nginx.conf (proxy pass).
+[root@linux reposteria]# curl -L  http://localhost:8080/api/
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Welcome to the API. This is Javier demonstrating I’m awesome at containers</h1>
+</body>
+</html>
+
