@@ -4,7 +4,7 @@
   vars:
     dockerhub_username: "your_dockerhub_username"
     dockerhub_password: "your_dockerhub_password"
-    app_directory: "/opt/myapp"
+    app_directory: "/root/ansible-playbook/"
   vars_prompt:
     - name: "dockerhub_password"
       prompt: "Enter your Docker Hub password"
@@ -21,10 +21,6 @@
     - name: Generate SSL certificates
       include_role:
         name: ssl_cert
-
-    - name: Build and push Docker images
-      include_role:
-        name: build_push_images
 
     - name: Deploy the application
       include_role:

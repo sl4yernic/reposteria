@@ -1,4 +1,6 @@
 ---
+# roles/ssl_cert/tasks/main.yml
+
 - name: Create SSL certificate directory
   file:
     path: "{{ app_directory }}/ssl_cert"
@@ -6,11 +8,11 @@
     mode: '0755'
 
 - name: Generate self-signed SSL certificate
-  openssl_certificate:
-    path: "{{ app_directory }}/ssl_cert/nginx.crt"
-    privatekey_path: "{{ app_directory }}/ssl_cert/nginx.key"
-    common_name: "localhost"
-    state: present
-    csr_path: "{{ app_directory }}/ssl_cert/nginx.csr"
-    provider: selfsigned
+  shell: |
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+      -keyout "{{ app_directory }}/ssl_cert/nginx.key" \
+      -out "{{ app_directory }}/ssl_cert/nginx.crt" \
+      -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=localhost"
+  args:
+    creates: "{{ app_directory }}/ssl_cert/nginx.crt"
 
