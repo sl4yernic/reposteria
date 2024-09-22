@@ -1,0 +1,16 @@
+---
+- name: Create SSL certificate directory
+  file:
+    path: "{{ app_directory }}/ssl_cert"
+    state: directory
+    mode: '0755'
+
+- name: Generate self-signed SSL certificate
+  openssl_certificate:
+    path: "{{ app_directory }}/ssl_cert/nginx.crt"
+    privatekey_path: "{{ app_directory }}/ssl_cert/nginx.key"
+    common_name: "localhost"
+    state: present
+    csr_path: "{{ app_directory }}/ssl_cert/nginx.csr"
+    provider: selfsigned
+

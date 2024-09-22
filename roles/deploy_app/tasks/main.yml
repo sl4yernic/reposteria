@@ -1,0 +1,45 @@
+---
+- name: Create application directory
+  file:
+    path: "{{ app_directory }}"
+    state: directory
+    mode: '0755'
+
+- name: Copy docker-compose.yml
+  copy:
+    src: docker-compose.yml
+    dest: "{{ app_directory }}/docker-compose.yml"
+  delegate_to: localhost
+
+- name: Copy nginx.conf
+  copy:
+    src: nginx.conf
+    dest: "{{ app_directory }}/nginx.conf"
+  delegate_to: localhost
+
+- name: Create .env file with Docker Hub username
+  copy:
+    dest: "{{ app_directory }}/.env"
+    content: |
+      DOCKERHUB_USERNAME={{ dockerhub_username }}
+  delegate_to: localhost
+
+- name: Pull images from Docker Hub
+  docker_image:
+    name: "{{ dockerhub_username }}/{{ item }}:latest"
+    source: pull
+  loop:
+    - root_app
+    - api_app
+
+- name: Run Docker Compose
+  command: docker-compose up -d
+  args:
+    chdir: "{{ app_directory }}"
+
+- name: Copy nginx.conf
+  copy:
+    src: nginx.conf
+    dest: "{{ app_directory }}/nginx.conf"
+  delegate_to: localhost
+

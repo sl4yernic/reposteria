@@ -1,0 +1,32 @@
+---
+- hosts: webservers
+  become: yes
+  vars:
+    dockerhub_username: "your_dockerhub_username"
+    dockerhub_password: "your_dockerhub_password"
+    app_directory: "/opt/myapp"
+  vars_prompt:
+    - name: "dockerhub_password"
+      prompt: "Enter your Docker Hub password"
+      private: yes
+  tasks:
+    - name: Include common tasks
+      include_role:
+        name: common
+
+    - name: Install Docker and Docker Compose
+      include_role:
+        name: docker
+
+    - name: Generate SSL certificates
+      include_role:
+        name: ssl_cert
+
+    - name: Build and push Docker images
+      include_role:
+        name: build_push_images
+
+    - name: Deploy the application
+      include_role:
+        name: deploy_app
+
